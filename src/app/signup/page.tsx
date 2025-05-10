@@ -2,15 +2,16 @@
 import Link from "next/link";
 import React from "react";
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const [user, setUser] = React.useState({
     email: "",
     password: "",
+    username: "",
   });
 
-  const signIn = async (e: React.FormEvent) => {
+  const onSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your login logic here
+    // Add your sign-up logic here
     console.log(user);
   };
 
@@ -19,13 +20,30 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden">
         {/* Header with gradient */}
         <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-center">
-          <h1 className="text-2xl font-bold text-white">Welcome Back</h1>
-          <p className="text-blue-100 mt-1">Sign in to your account</p>
+          <h1 className="text-2xl font-bold text-white">Create Your Account</h1>
+          <p className="text-blue-100 mt-1">Join us today</p>
         </div>
 
         {/* Form section */}
         <div className="p-8">
-          <form onSubmit={signIn} className="space-y-5">
+          <form onSubmit={onSignUp} className="space-y-5">
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                placeholder="john_doe"
+                value={user.username}
+                onChange={(e) => setUser({ ...user, username: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              />
+            </div>
+
             <div>
               <label
                 htmlFor="email"
@@ -40,7 +58,6 @@ export default function LoginPage() {
                 value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                required
               />
             </div>
 
@@ -58,7 +75,6 @@ export default function LoginPage() {
                 value={user.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                required
               />
             </div>
 
@@ -66,18 +82,18 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300"
             >
-              Sign in
+              Sign Up
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Don&apos;t have an account?{" "}
+              Already have an account?{" "}
               <Link
-                href="/signup"
+                href="/login"
                 className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
               >
-                Sign up
+                Log in
               </Link>
             </p>
           </div>

@@ -1,22 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { connectDB } from "@/dbconfig/dbconfig";
+import { connect } from "@/dbconfig/dbconfig";
 
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
 import bcrypt from "bcryptjs";
 
-connectDB();
+connect();
 
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { name, email, password } = reqBody;
+    const { username, email, password } = reqBody;
 
-    console.log(reqBody);
+    console.log("Request body:", reqBody);
+
+    // Check if required fields exist
+    if (!username || !email || !password) {
+      console.log("Missing fields:", { username, email, password });
+      return NextResponse.json(
+        { error: "Username, email and password are required" },
+        { status: 400 }
+      );
+    }
 
     const user = await User.findOne({ email });
     if (user) {
+      console.log("User already exists:", email);
       return NextResponse.json(
         { error: "User already exists" },
         { status: 400 }
@@ -27,18 +37,27 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      name,
+      username,
       email,
       password: hashedPassword,
     });
+
+    console.log("Attempting to save user:", newUser);
+
     const savedUser = await newUser.save();
-    console.log(savedUser);
+    console.log("User saved successfully:", savedUser);
+
     return NextResponse.json({
       message: "User created successfully",
       status: 201,
       savedUser,
     });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Full error:", error);
+    console.error("Error stack:", error.stack);
+    return NextResponse.json(
+      { error: error.message || "Internal server error" },
+      { status: 500 }
+    );
   }
 }

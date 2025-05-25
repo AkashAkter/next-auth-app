@@ -17,7 +17,7 @@ export default function Home() {
       ripple.style.top = `${e.clientY}px`;
 
       containerRef.current.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 1000);
+      setTimeout(() => ripple.remove(), 5000);
     };
 
     containerRef.current?.addEventListener("mousemove", handleMouseMove);

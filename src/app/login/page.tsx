@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
@@ -21,7 +22,6 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       setLoading(true);
-      // Add your login logic here
       const response = await axios.post("/api/users/login", user);
       console.log("Login success", response.data);
       toast.success("Login successful!");
@@ -43,61 +43,71 @@ export default function LoginPage() {
   }, [user]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-gray-700">
-        {/* Header with gradient */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-center">
-          <h1 className="text-2xl font-bold text-white">Welcome Back</h1>
-          <p className="text-indigo-200 mt-1">Sign in to your account</p>
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-cyan-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+        {/* Header with solid color */}
+        <div className="bg-teal-600 p-6 text-center">
+          <h1 className="text-3xl font-bold text-white">Welcome Back</h1>
+          <p className="text-teal-100 mt-2">Please enter your details</p>
         </div>
 
         {/* Form section */}
         <div className="p-8">
-          <form onSubmit={signIn} className="space-y-5">
+          <form onSubmit={signIn} className="space-y-6">
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Email
+                Email Address
               </label>
               <input
                 type="email"
                 id="email"
-                placeholder="john@example.com"
+                placeholder="Enter your email"
                 value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-white placeholder-gray-400"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-gray-700 placeholder-gray-400"
                 required
               />
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-300 mb-1"
-              >
-                Password
-              </label>
+              <div className="flex justify-between items-center mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Password
+                </label>
+                <Link
+                  href="/forgot-password"
+                  className="text-xs text-teal-600 hover:text-teal-500 hover:underline"
+                >
+                  Forgot password?
+                </Link>
+              </div>
               <input
                 type="password"
                 id="password"
-                placeholder="••••••••"
+                placeholder="Enter your password"
                 value={user.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-white placeholder-gray-400"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-gray-700 placeholder-gray-400"
                 required
               />
             </div>
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={buttonDisabled || loading}
               className={`w-full ${
-                loading
-                  ? "bg-indigo-700 cursor-not-allowed"
-                  : "bg-indigo-600 hover:bg-indigo-700"
-              } text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center`}
+                buttonDisabled || loading
+                  ? "bg-teal-400 cursor-not-allowed"
+                  : "bg-teal-600 hover:bg-teal-700"
+              } text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center shadow-md ${
+                !buttonDisabled && !loading && "hover:shadow-lg"
+              }`}
             >
               {loading ? (
                 <>
@@ -124,17 +134,17 @@ export default function LoginPage() {
                   Signing in...
                 </>
               ) : (
-                "Sign in"
+                "Sign In"
               )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-400">
-              Don&apos;t have an account?{" "}
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
               <Link
                 href="/signup"
-                className="font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
+                className="font-medium text-teal-600 hover:text-teal-500 transition-colors"
               >
                 Sign up
               </Link>

@@ -58,68 +58,75 @@ export default function SignUpPage() {
   }, [user]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-gray-700">
-        {/* Header with gradient */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-center">
-          <h1 className="text-2xl font-bold text-white">
-            {loading ? "Processing" : "Create Your Account"}
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-cyan-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+        {/* Header with solid color */}
+        <div className="bg-teal-600 p-6 text-center">
+          <h1 className="text-3xl font-bold text-white">
+            {loading ? "Creating Account..." : "Join Us Today"}
           </h1>
-          <p className="text-indigo-200 mt-1">Join us today</p>
+          <p className="text-teal-100 mt-2">Create your account in minutes</p>
         </div>
 
         {/* Form section */}
         <div className="p-8">
-          <form onSubmit={onSignUp} className="space-y-5">
+          <form onSubmit={onSignUp} className="space-y-6">
             <div>
               <label
                 htmlFor="username"
-                className="block text-sm font-medium text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Username
               </label>
               <input
                 type="text"
                 id="username"
-                placeholder="john_doe"
+                placeholder="Enter your username"
                 value={user.username}
                 onChange={(e) => setUser({ ...user, username: e.target.value })}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-white placeholder-gray-400"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-gray-700 placeholder-gray-400"
+                required
               />
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Email
+                Email Address
               </label>
               <input
                 type="email"
                 id="email"
-                placeholder="john@example.com"
+                placeholder="Enter your email"
                 value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-white placeholder-gray-400"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-gray-700 placeholder-gray-400"
+                required
               />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Password
               </label>
               <input
                 type="password"
                 id="password"
-                placeholder="••••••••"
+                placeholder="Create a password"
                 value={user.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-white placeholder-gray-400"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-gray-700 placeholder-gray-400"
+                required
               />
+              <p className="mt-1 text-xs text-gray-500">
+                Use 8 or more characters with a mix of letters, numbers &
+                symbols
+              </p>
             </div>
 
             <button
@@ -127,9 +134,11 @@ export default function SignUpPage() {
               disabled={buttonDisabled || loading}
               className={`w-full ${
                 buttonDisabled || loading
-                  ? "bg-gray-600 cursor-not-allowed"
-                  : "bg-indigo-600 hover:bg-indigo-700"
-              } text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center`}
+                  ? "bg-teal-400 cursor-not-allowed"
+                  : "bg-teal-600 hover:bg-teal-700"
+              } text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center shadow-md ${
+                !buttonDisabled && !loading && "hover:shadow-lg"
+              }`}
             >
               {loading ? (
                 <>
@@ -161,12 +170,12 @@ export default function SignUpPage() {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-400">
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-600">
               Already have an account?{" "}
               <Link
                 href="/login"
-                className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
+                className="font-medium text-teal-600 hover:text-teal-500 transition-colors"
               >
                 Log in
               </Link>
